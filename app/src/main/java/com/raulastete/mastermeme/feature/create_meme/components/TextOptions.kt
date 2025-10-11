@@ -33,7 +33,7 @@ enum class TextOption {
 @Composable
 fun TextOptions(
     modifier: Modifier = Modifier,
-    optionSelected: TextOption? = TextOption.FontFamily,
+    optionSelected: TextOption?,
     onDiscardChanges: () -> Unit,
     onConfirmChanges: () -> Unit,
     onEditFontFamily: () -> Unit,
