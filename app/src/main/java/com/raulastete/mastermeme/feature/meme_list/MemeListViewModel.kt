@@ -23,7 +23,7 @@ class MemeListViewModel : ViewModel() {
 
     fun dismissModal() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isOpen = false)
+            modalState = _uiState.value.modalState.copy(isOpen = false, isSearchMode = false)
         )
     }
 
@@ -33,13 +33,13 @@ class MemeListViewModel : ViewModel() {
         )
     }
 
-    fun closeSearchTemplate(){
+    fun closeSearchTemplate() {
         _uiState.value = _uiState.value.copy(
             modalState = _uiState.value.modalState.copy(isSearchMode = false)
         )
     }
 
-    fun cleanQuery(){
+    fun cleanQuery() {
         _uiState.value = _uiState.value.copy(
             modalState = _uiState.value.modalState.copy(query = "")
         )

@@ -41,7 +41,7 @@ fun NormalTopBar(title: String) {
 @Composable
 fun NavigationalTopBar(title: String, onNavigateBack: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = title) },
+        title = { Text(text = title, style = MaterialTheme.typography.headlineLarge) },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
                 Icon(
@@ -49,7 +49,10 @@ fun NavigationalTopBar(title: String, onNavigateBack: () -> Unit) {
                     contentDescription = "Navigate back"
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
     )
 }
 
