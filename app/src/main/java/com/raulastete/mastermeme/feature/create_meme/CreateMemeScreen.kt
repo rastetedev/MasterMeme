@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.raulastete.mastermeme.feature.create_meme.components.MainOptions
+import com.raulastete.mastermeme.feature.create_meme.components.TextOptions
 import com.raulastete.mastermeme.ui.components.NavigationalTopBar
 
 @Composable
@@ -42,7 +43,7 @@ private fun CreateMemeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            MainOptions(
+            /*MainOptions(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
@@ -50,6 +51,16 @@ private fun CreateMemeScreenContent(
                 onRedoEdition = onRedoEdition,
                 onAddTextBox = onAddTextBox,
                 onSaveMeme = onSaveMeme
+            )*/
+            TextOptions(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                onDiscardChanges = {},
+                onConfirmChanges = {},
+                onEditFontFamily = {},
+                onEditFontSize = {},
+                onEditFontColor = {}
             )
         }
 
