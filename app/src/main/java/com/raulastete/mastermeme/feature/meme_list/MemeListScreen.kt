@@ -54,6 +54,7 @@ fun MemeListScreen(
         onDismissModal = viewModel::dismissModal,
         onOpenSearchTemplate = viewModel::openSearchTemplate,
         onCloseSearchTemplate = viewModel::closeSearchTemplate,
+        onCleanQuery = viewModel::cleanQuery,
         onQueryChange = viewModel::updateQuery
     )
 }
@@ -67,6 +68,7 @@ private fun MemeListScreenContent(
     onDismissModal: () -> Unit,
     onOpenSearchTemplate: () -> Unit,
     onCloseSearchTemplate: () -> Unit,
+    onCleanQuery: () -> Unit,
     onQueryChange: (String) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -115,6 +117,7 @@ private fun MemeListScreenContent(
                             query = uiState.modalState.query,
                             onQueryChange = onQueryChange,
                             onCloseSearchTemplate = onCloseSearchTemplate,
+                            onCleanQuery = onCleanQuery,
                             templatesQuantity = uiState.modalState.templates.size
                         )
                     } else {
@@ -163,6 +166,7 @@ private fun MemeListScreenContentPreview() {
             onDismissModal = {},
             onOpenSearchTemplate = {},
             onCloseSearchTemplate = {},
+            onCleanQuery = {},
             onQueryChange = {}
         )
     }

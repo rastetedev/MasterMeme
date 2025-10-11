@@ -39,4 +39,10 @@ class MemeListViewModel : ViewModel() {
         )
     }
 
+    fun cleanQuery(){
+        _uiState.value = _uiState.value.copy(
+            modalState = _uiState.value.modalState.copy(query = "")
+        )
+    }
+
 }

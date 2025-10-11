@@ -11,9 +11,11 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +27,10 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun NormalTopBar(title: String) {
     TopAppBar(
-        title = { Text(text = title) }
+        title = { Text(text = title, style = MaterialTheme.typography.headlineLarge) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
     )
 }
 

@@ -8,10 +8,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.raulastete.mastermeme.ui.theme.White
 
 @Composable
 fun ModalDefaultHeader(
@@ -23,14 +25,23 @@ fun ModalDefaultHeader(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Choose template")
+            Text(
+                "Choose template",
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
             IconButton(onClick = onOpenSearchTemplate) {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
+                    contentDescription = "Search",
+                    tint = MaterialTheme.colorScheme.secondaryFixedDim
                 )
             }
         }
-        Text("Choose template for your next meme masterpiece")
+        Text(
+            "Choose template for your next meme masterpiece",
+            style = MaterialTheme.typography.bodySmall,
+            color = White
+        )
     }
 }
