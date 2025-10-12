@@ -33,6 +33,9 @@ fun EmptyMemeListPlaceholder(paddingValues: PaddingValues) {
             contentDescription = null
         )
         Spacer(Modifier.height(34.dp))
-        Text(stringResource(R.string.empty_meme_list_placeholder), style = MaterialTheme.typography.bodySmall)
+        Text(
+            stringResource(R.string.empty_meme_list_placeholder),
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }

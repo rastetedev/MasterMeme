@@ -1,18 +1,13 @@
 package com.raulastete.mastermeme.presentation.feature.meme_list.components
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,10 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.raulastete.mastermeme.R
 
 @Composable
 fun MemeCard(
@@ -40,7 +38,7 @@ fun MemeCard(
 ) {
     Card(
         modifier = modifier
-            .aspectRatio(1f) // Makes the card square
+            .aspectRatio(1f)
             .clip(MaterialTheme.shapes.medium)
             .combinedClickable(
                 onClick = {
@@ -53,7 +51,7 @@ fun MemeCard(
             )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Background Image
+
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "Meme Image",
@@ -61,7 +59,6 @@ fun MemeCard(
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -73,18 +70,17 @@ fun MemeCard(
                     )
             )
 
-            // Conditional Buttons
             if (isSelectionMode) {
                 SelectionToggleButton(
                     isSelected = isSelected,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(8.dp)
                 )
             } else {
                 FavoriteToggleButton(
                     isFavorite = isFavorite,
-                    modifier = Modifier.align(Alignment.BottomEnd)
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
                 )
             }
         }
@@ -96,26 +92,21 @@ private fun SelectionToggleButton(
     isSelected: Boolean,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .size(24.dp)
-            .clip(CircleShape)
-            .then(
-                if (isSelected) {
-                    Modifier.background(Color(0xFFEADDFF))
-                } else {
-                    Modifier.border(1.dp, Color.White, CircleShape)
-                }
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        if (isSelected) {
-            Icon(
-                imageVector = Icons.Default.Check,
-                contentDescription = "Selected",
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.size(16.dp)
-            )
+    Box(modifier = modifier){
+        AnimatedContent(isSelected){ isSelected ->
+            if(isSelected){
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.check_meme),
+                    contentDescription = "Meme selected",
+                    tint = Color.Unspecified
+                )
+            } else {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.uncheck_meme),
+                    contentDescription = "Meme unselected",
+                    tint = Color.Unspecified
+                )
+            }
         }
     }
 }
@@ -125,14 +116,22 @@ private fun FavoriteToggleButton(
     isFavorite: Boolean,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.padding(16.dp)
-    ) {
-        Icon(
-            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-            contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
-            tint = Color.White
-        )
+    Box(modifier = modifier){
+        AnimatedContent(isFavorite){ isFavorite ->
+            if(isFavorite){
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.favorite_meme),
+                    contentDescription = "Meme favorite",
+                    tint = Color.Unspecified
+                )
+            } else {
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.unfavorite_meme),
+                    contentDescription = "Meme unfavorite",
+                    tint = Color.Unspecified
+                )
+            }
+        }
     }
 }
 
