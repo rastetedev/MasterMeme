@@ -50,6 +50,7 @@ fun MemeListScreen(
         onShareMemes = viewModel::shareMemes,
         onDeleteMemes = viewModel::deleteMemes,
         onEnterSelectionMode = viewModel::enterSelectionMode,
+        onSortingMemesModeChange = viewModel::updateSortingMemesMode,
         onExitSelectionMode = viewModel::exitSelectionMode
     )
 }
@@ -70,6 +71,7 @@ private fun MemeListScreenContent(
     onShareMemes: () -> Unit,
     onDeleteMemes: () -> Unit,
     onEnterSelectionMode: (memeId: String) -> Unit,
+    onSortingMemesModeChange: (sortingMode: SortingMode) -> Unit,
     onExitSelectionMode: () -> Unit
 ) {
 
@@ -92,7 +94,7 @@ private fun MemeListScreenContent(
                         ItemsTopBar(
                             title = stringResource(R.string.meme_list_title),
                             sortingMode = uiState.memeListState.sortingMode,
-                            onSortClick = {}
+                            onSortClick = onSortingMemesModeChange
                         )
                     }
                 }
@@ -147,7 +149,8 @@ private fun MemeListScreenContentPreview() {
             onToggleMemeFavoriteState = {},
             onToggleMemeSelectionState = {},
             onSelectTemplate = {},
-            onEnterSelectionMode = {}
+            onEnterSelectionMode = {},
+            onSortingMemesModeChange = {}
         )
     }
 }

@@ -3,4 +3,6 @@
 
     <string name="meme_list_title">Your memes</string>
     <string name="empty_meme_list_placeholder">Tap + button to create your first meme</string>
+    <string name="favorites_first_option">Favorites first</string>
+    <string name="newest_first_option">Newest first</string>
 </resources>

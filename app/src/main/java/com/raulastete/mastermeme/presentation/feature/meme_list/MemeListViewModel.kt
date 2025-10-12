@@ -117,6 +117,12 @@ class MemeListViewModel : ViewModel() {
         )
     }
 
+    fun updateSortingMemesMode(sortingMode: SortingMode) {
+        _uiState.value = _uiState.value.copy(
+            memeListState = uiState.value.memeListState.copy(sortingMode = sortingMode)
+        )
+    }
+
     fun shareMemes() {
 
     }
