@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +29,7 @@ import com.raulastete.mastermeme.presentation.ui.theme.PurpleMedium2
 import com.raulastete.mastermeme.presentation.ui.theme.White
 
 @Composable
-fun SearchTemplateMode(
+fun SearchTemplateModalHeader(
     query: String,
     onCleanQuery: () -> Unit,
     onQueryChange: (String) -> Unit,
@@ -61,7 +62,7 @@ fun SearchTemplateMode(
             ) { innerTextField ->
                 if (query.isEmpty()) {
                     Text(
-                        "Search input",
+                        stringResource(R.string.search_template_placeholder),
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontSize = 14.sp,
                             color = White.copy(alpha = 0.3f)
@@ -74,8 +75,8 @@ fun SearchTemplateMode(
                 onClick = onCleanQuery,
                 enabled = query.isNotBlank(),
                 colors = IconButtonDefaults.iconButtonColors(
-                    contentColor =  MaterialTheme.colorScheme.secondaryFixedDim,
-                    disabledContentColor =  MaterialTheme.colorScheme.secondaryFixedDim.copy(alpha = 0.4f)
+                    contentColor = MaterialTheme.colorScheme.secondaryFixedDim,
+                    disabledContentColor = MaterialTheme.colorScheme.secondaryFixedDim.copy(alpha = 0.4f)
                 )
             ) {
                 Icon(
@@ -93,7 +94,7 @@ fun SearchTemplateMode(
 
         AnimatedContent(templatesQuantity) { target ->
 
-            val text = if (target == 0) "No memes found :C" else "$target memes"
+            val text = if (target == 0) stringResource(R.string.no_memes_found) else "$target memes"
 
             Text(
                 text,

@@ -43,7 +43,7 @@ fun MemeTemplateBottomSheet(
     ) {
         AnimatedContent(uiState.templatesModalState.isSearchBarDisplayed) { isSearchBarDisplayed ->
             if (isSearchBarDisplayed) {
-                SearchTemplateMode(
+                SearchTemplateModalHeader(
                     query = uiState.templatesModalState.query,
                     onQueryChange = onQueryChange,
                     onCloseSearchTemplate = onCloseSearchTemplate,

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.raulastete.mastermeme.R
 import com.raulastete.mastermeme.presentation.ui.theme.White
@@ -27,7 +28,7 @@ fun ModalDefaultHeader(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "Choose template",
+                stringResource(R.string.default_modal_header_title),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -40,7 +41,7 @@ fun ModalDefaultHeader(
             }
         }
         Text(
-            "Choose template for your next meme masterpiece",
+            stringResource(R.string.default_modal_header_subtitle),
             style = MaterialTheme.typography.bodySmall,
             color = White
         )

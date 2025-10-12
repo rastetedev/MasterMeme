@@ -5,4 +5,8 @@
     <string name="empty_meme_list_placeholder">Tap + button to create your first meme</string>
     <string name="favorites_first_option">Favorites first</string>
     <string name="newest_first_option">Newest first</string>
+    <string name="search_template_placeholder">Search input</string>
+    <string name="default_modal_header_title">Choose template</string>
+    <string name="default_modal_header_subtitle">Choose template for your next meme masterpiece</string>
+    <string name="no_memes_found">No memes found :C</string>
 </resources>
