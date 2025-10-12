@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.meme_list.components
+package com.raulastete.mastermeme.presentation.feature.meme_list.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.raulastete.mastermeme.feature.meme_list.MemeUiState
+import com.raulastete.mastermeme.presentation.feature.meme_list.MemeUiState
 
 @Composable
 fun MemeListGrid(

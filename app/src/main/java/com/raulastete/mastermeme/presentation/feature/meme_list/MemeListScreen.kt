@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.meme_list
+package com.raulastete.mastermeme.presentation.feature.meme_list
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
@@ -32,13 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.raulastete.mastermeme.feature.meme_list.components.EmptyMemeListContent
-import com.raulastete.mastermeme.feature.meme_list.components.MemeListGrid
-import com.raulastete.mastermeme.feature.meme_list.components.ModalDefaultHeader
-import com.raulastete.mastermeme.feature.meme_list.components.SearchTemplateMode
-import com.raulastete.mastermeme.ui.components.GradientFab
-import com.raulastete.mastermeme.ui.components.NormalTopBar
-import com.raulastete.mastermeme.ui.components.SelectionTopBar
+import com.raulastete.mastermeme.presentation.feature.meme_list.components.EmptyMemeListContent
+import com.raulastete.mastermeme.presentation.feature.meme_list.components.MemeListGrid
+import com.raulastete.mastermeme.presentation.feature.meme_list.components.ModalDefaultHeader
+import com.raulastete.mastermeme.presentation.feature.meme_list.components.SearchTemplateMode
+import com.raulastete.mastermeme.presentation.ui.components.GradientFab
+import com.raulastete.mastermeme.presentation.ui.components.NormalTopBar
+import com.raulastete.mastermeme.presentation.ui.components.SelectionTopBar
 
 @Composable
 fun MemeListScreen(

@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.ui.components
+package com.raulastete.mastermeme.presentation.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

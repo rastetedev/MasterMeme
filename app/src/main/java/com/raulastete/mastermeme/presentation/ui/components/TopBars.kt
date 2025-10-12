@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.ui.components
+package com.raulastete.mastermeme.presentation.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons

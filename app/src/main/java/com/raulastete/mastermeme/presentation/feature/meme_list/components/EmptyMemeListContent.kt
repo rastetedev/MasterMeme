@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.meme_list.components
+package com.raulastete.mastermeme.presentation.feature.meme_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.create_meme.components
+package com.raulastete.mastermeme.presentation.feature.create_meme.components
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.raulastete.mastermeme.ui.theme.White
+import com.raulastete.mastermeme.presentation.ui.theme.White
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)

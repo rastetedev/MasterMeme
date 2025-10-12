@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.navigation
+package com.raulastete.mastermeme.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

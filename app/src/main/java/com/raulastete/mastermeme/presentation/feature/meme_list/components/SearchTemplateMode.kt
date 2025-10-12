@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.meme_list.components
+package com.raulastete.mastermeme.presentation.feature.meme_list.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Column
@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raulastete.mastermeme.ui.theme.PurpleMedium2
-import com.raulastete.mastermeme.ui.theme.White
+import com.raulastete.mastermeme.presentation.ui.theme.PurpleMedium2
+import com.raulastete.mastermeme.presentation.ui.theme.White
 
 @Composable
 fun SearchTemplateMode(

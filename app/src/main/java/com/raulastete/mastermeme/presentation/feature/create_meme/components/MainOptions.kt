@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.create_meme.components
+package com.raulastete.mastermeme.presentation.feature.create_meme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
-import com.raulastete.mastermeme.ui.theme.ButtonGradientDefault
+import com.raulastete.mastermeme.presentation.ui.theme.ButtonGradientDefault
 
 @Composable
 fun MainOptions(

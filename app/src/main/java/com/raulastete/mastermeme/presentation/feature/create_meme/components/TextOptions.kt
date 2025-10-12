@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.create_meme.components
+package com.raulastete.mastermeme.presentation.feature.create_meme.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
-import com.raulastete.mastermeme.ui.theme.White
+import com.raulastete.mastermeme.presentation.ui.theme.White
 
 enum class TextOption {
     FontFamily,

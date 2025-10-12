@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.ui.theme
+package com.raulastete.mastermeme.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

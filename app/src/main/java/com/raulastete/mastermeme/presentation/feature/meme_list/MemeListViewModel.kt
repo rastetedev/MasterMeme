@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.meme_list
+package com.raulastete.mastermeme.presentation.feature.meme_list
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

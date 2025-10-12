@@ -13,11 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.raulastete.mastermeme.feature.create_meme.components.FontSizeConfiguration
-import com.raulastete.mastermeme.feature.create_meme.components.MainOptions
-import com.raulastete.mastermeme.feature.create_meme.components.TextOption
-import com.raulastete.mastermeme.feature.create_meme.components.TextOptions
-import com.raulastete.mastermeme.ui.components.NavigationalTopBar
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontColorConfiguration
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOptions
+import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
+import com.raulastete.mastermeme.presentation.ui.components.NavigationalTopBar
 
 @Composable
 fun CreateMemeScreen(navigateBack: () -> Unit) {

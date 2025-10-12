@@ -1,11 +1,11 @@
-package com.raulastete.mastermeme.navigation
+package com.raulastete.mastermeme.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.raulastete.mastermeme.feature.create_meme.CreateMemeScreen
-import com.raulastete.mastermeme.feature.meme_list.MemeListScreen
+import com.raulastete.mastermeme.presentation.feature.create_meme.CreateMemeScreen
+import com.raulastete.mastermeme.presentation.feature.meme_list.MemeListScreen
 
 @Composable
 fun NavGraph() {
