@@ -1,7 +1,9 @@
 package com.raulastete.mastermeme.presentation.feature.create_meme
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontColorConfiguration
+import coil.compose.AsyncImage
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontTypeConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOptions
@@ -24,6 +27,7 @@ import com.raulastete.mastermeme.presentation.ui.components.NavigationalTopBar
 
 @Composable
 fun CreateMemeScreen(
+    @DrawableRes templateResourceId: Int,
     viewModel: CreateMemeViewModel = viewModel(),
     navigateBack: () -> Unit
 ) {
@@ -31,11 +35,12 @@ fun CreateMemeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     CreateMemeScreenContent(
+        templateResourceId = templateResourceId,
         uiState = uiState,
         navigateBack = navigateBack,
         onUpdateFontSize = viewModel::updateFontSize,
         onUpdateFontColor = viewModel::updateFontColor,
-        onUpdateFontType = viewModel:: updateFontType,
+        onUpdateFontType = viewModel::updateFontType,
         onUndoEdition = {},
         onRedoEdition = {},
         onAddTextBox = {},
@@ -44,6 +49,7 @@ fun CreateMemeScreen(
 
 @Composable
 private fun CreateMemeScreenContent(
+    @DrawableRes templateResourceId: Int,
     uiState: CreateMemeUiState,
     navigateBack: () -> Unit,
     onUpdateFontSize: (Float) -> Unit,
@@ -68,6 +74,14 @@ private fun CreateMemeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            AsyncImage(
+                model = templateResourceId,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .aspectRatio(1f)
+            )
             /*MainOptions(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,6 +171,7 @@ private fun CreateMemeScreenContentPreview() {
     MaterialTheme {
         CreateMemeScreenContent(
             uiState = CreateMemeUiState(),
+            templateResourceId = 0,
             navigateBack = {},
             onUpdateFontSize = {},
             onUpdateFontColor = {},

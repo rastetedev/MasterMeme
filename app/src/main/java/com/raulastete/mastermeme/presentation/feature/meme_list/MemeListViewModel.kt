@@ -21,6 +21,24 @@ class MemeListViewModel : ViewModel() {
         )
     }
 
+    fun selectMemeTemplate(memeTemplateResource: Int) {
+        _uiState.value = _uiState.value.copy(
+            templatesModalState = _uiState.value.templatesModalState.copy(
+                templateSelectedId = memeTemplateResource,
+                isSearchBarDisplayed = false,
+                isOpen = false
+            )
+        )
+    }
+
+    fun onNavigationHandled(){
+        _uiState.value = _uiState.value.copy(
+            templatesModalState = _uiState.value.templatesModalState.copy(
+                templateSelectedId = null
+            )
+        )
+    }
+
     fun dismissTemplatesModal() {
         _uiState.value = _uiState.value.copy(
             templatesModalState = _uiState.value.templatesModalState.copy(

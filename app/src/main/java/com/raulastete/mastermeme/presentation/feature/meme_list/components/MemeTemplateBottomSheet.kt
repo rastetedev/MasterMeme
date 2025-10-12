@@ -27,8 +27,8 @@ fun MemeTemplateBottomSheet(
     onCloseSearchTemplate: () -> Unit,
     onCleanQuery: () -> Unit,
     onDismissModal: () -> Unit,
-    onQueryChange: (String) -> Unit,
-    navigateToCreateMeme: (templateResource: Int) -> Unit
+    onQueryChange: (query: String) -> Unit,
+    onSelectTemplate: (memeTemplateResource: Int) -> Unit
 ){
     val sheetState = rememberModalBottomSheetState()
 
@@ -64,7 +64,7 @@ fun MemeTemplateBottomSheet(
         ) {
             items(uiState.templatesModalState.templates) {
                 MemeTemplateCard(it) {
-                    navigateToCreateMeme(it)
+                    onSelectTemplate(it)
                 }
             }
         }

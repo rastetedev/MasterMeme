@@ -36,7 +36,8 @@ data class TemplatesModalState(
     val isOpen: Boolean = false,
     val isSearchBarDisplayed: Boolean = false,
     val query: String = "",
-    val templates: List<Int> = memeTemplateResourceList
+    val templates: List<Int> = memeTemplateResourceList,
+    val templateSelectedId: Int? = null,
 )
 
 val memeTemplateResourceList = listOf(

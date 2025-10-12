@@ -1,10 +1,12 @@
 package com.raulastete.mastermeme.presentation.feature.meme_list
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,9 +29,16 @@ fun MemeListScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(uiState.templatesModalState.templateSelectedId) {
+        uiState.templatesModalState.templateSelectedId?.let { templateId ->
+            navigateToCreateMeme(templateId)
+            viewModel.onNavigationHandled()
+        }
+    }
+
     MemeListScreenContent(
         uiState = uiState,
-        navigateToCreateMeme = navigateToCreateMeme,
+        onSelectTemplate = viewModel::selectMemeTemplate,
         onToggleMemeFavoriteState = viewModel::toggleFavoriteState,
         onOpenTemplatesModal = viewModel::openTemplatesModal,
         onDismissTemplatesModal = viewModel::dismissTemplatesModal,
@@ -40,8 +49,8 @@ fun MemeListScreen(
         onToggleMemeSelectionState = viewModel::toggleSelectionState,
         onShareMemes = viewModel::shareMemes,
         onDeleteMemes = viewModel::deleteMemes,
-        onExitSelectionMode = viewModel::exitSelectionMode,
-        onEnterSelectionMode = viewModel::enterSelectionMode
+        onEnterSelectionMode = viewModel::enterSelectionMode,
+        onExitSelectionMode = viewModel::exitSelectionMode
     )
 }
 
@@ -49,7 +58,7 @@ fun MemeListScreen(
 @Composable
 private fun MemeListScreenContent(
     uiState: MemeListUiState,
-    navigateToCreateMeme: (templateResource: Int) -> Unit,
+    onSelectTemplate: (memeTemplateResource: Int) -> Unit,
     onToggleMemeFavoriteState: (memeId: String) -> Unit,
     onOpenTemplatesModal: () -> Unit,
     onDismissTemplatesModal: () -> Unit,
@@ -77,7 +86,7 @@ private fun MemeListScreenContent(
                         onDeleteClick = onDeleteMemes
                     )
                 } else {
-                    if(memes.isEmpty()){
+                    if (memes.isEmpty()) {
                         NormalTopBar(title = stringResource(R.string.meme_list_title))
                     } else {
                         ItemsTopBar(
@@ -106,7 +115,7 @@ private fun MemeListScreenContent(
             )
         }
 
-        if (uiState.templatesModalState.isOpen) {
+        AnimatedVisibility(uiState.templatesModalState.isOpen) {
             MemeTemplateBottomSheet(
                 uiState = uiState,
                 onOpenSearchTemplate = onActivateSearchTemplate,
@@ -114,7 +123,7 @@ private fun MemeListScreenContent(
                 onCleanQuery = onCleanSearchTemplateQuery,
                 onDismissModal = onDismissTemplatesModal,
                 onQueryChange = onSearchTemplateQueryChange,
-                navigateToCreateMeme = navigateToCreateMeme
+                onSelectTemplate = onSelectTemplate
             )
         }
     }
@@ -126,7 +135,6 @@ private fun MemeListScreenContentPreview() {
     MaterialTheme {
         MemeListScreenContent(
             uiState = MemeListUiState(),
-            navigateToCreateMeme = {},
             onExitSelectionMode = {},
             onShareMemes = {},
             onDeleteMemes = {},
@@ -138,6 +146,7 @@ private fun MemeListScreenContentPreview() {
             onSearchTemplateQueryChange = {},
             onToggleMemeFavoriteState = {},
             onToggleMemeSelectionState = {},
+            onSelectTemplate = {},
             onEnterSelectionMode = {}
         )
     }

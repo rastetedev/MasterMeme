@@ -7,5 +7,7 @@ sealed class Routes {
     object MemeList
 
     @Serializable
-    object CreateMeme
+    data class CreateMeme(
+        val templateResourceId: Int
+    )
 }
