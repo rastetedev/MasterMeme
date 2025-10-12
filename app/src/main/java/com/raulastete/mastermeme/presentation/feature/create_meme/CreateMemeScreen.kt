@@ -1,6 +1,8 @@
 package com.raulastete.mastermeme.presentation.feature.create_meme
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -18,7 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontColorConfiguration
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontSizeConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontTypeConfiguration
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.MainOptions
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOptions
 import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
@@ -38,12 +43,15 @@ fun CreateMemeScreen(
         templateResourceId = templateResourceId,
         uiState = uiState,
         navigateBack = navigateBack,
-        onUpdateFontSize = viewModel::updateFontSize,
-        onUpdateFontColor = viewModel::updateFontColor,
-        onUpdateFontType = viewModel::updateFontType,
+        onSelectEditFontTypeOption = viewModel::selectEditFontTypeOption,
+        onSelectEditFontSizeOption = viewModel::selectEditFontSizeOption,
+        onSelectEditFontColorOption = viewModel::selectEditFontColorOption,
+        onUpdateFontSize = {},
+        onUpdateFontColor = { },
+        onUpdateFontType = {},
         onUndoEdition = {},
         onRedoEdition = {},
-        onAddTextBox = {},
+        onAddTextBox = viewModel::addNewTextBox,
         onSaveMeme = {})
 }
 
@@ -52,6 +60,9 @@ private fun CreateMemeScreenContent(
     @DrawableRes templateResourceId: Int,
     uiState: CreateMemeUiState,
     navigateBack: () -> Unit,
+    onSelectEditFontTypeOption: () -> Unit,
+    onSelectEditFontSizeOption: () -> Unit,
+    onSelectEditFontColorOption: () -> Unit,
     onUpdateFontSize: (Float) -> Unit,
     onUpdateFontColor: (MemeFontColorUi) -> Unit,
     onUpdateFontType: (MemeFontTypeUi) -> Unit,
@@ -74,96 +85,76 @@ private fun CreateMemeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+
             AsyncImage(
                 model = templateResourceId,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .aspectRatio(1f)
             )
-            /*MainOptions(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter),
-                onUndoEdition = onUndoEdition,
-                onRedoEdition = onRedoEdition,
-                onAddTextBox = onAddTextBox,
-                onSaveMeme = onSaveMeme
-            )*/
-
-            /*Column(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            ) {
-                FontSizeConfiguration(
-                    modifier = Modifier.fillMaxWidth(),
-                    fontSizeFloat = uiState.textState.fontSize,
-                    onFontSizeFloatChange = onUpdateFontSize
-                )
-                TextOptions(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onDiscardChanges = {},
-                    onConfirmChanges = {},
-                    onEditFontFamily = {},
-                    onEditFontSize = {},
-                    onEditFontColor = {},
-                    optionSelected = TextOption.FontSize
-                )
-            }*/
-
-            /*Column(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-            ) {
-                FontColorConfiguration(
-                    modifier = Modifier.fillMaxWidth(),
-                    selectedColor = uiState.textState.fontColor,
-                    fontColorList = uiState.fontColors,
-                    onColorSelected = onUpdateFontColor
-                )
-                TextOptions(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onDiscardChanges = {},
-                    onConfirmChanges = {},
-                    onEditFontFamily = {},
-                    onEditFontSize = {},
-                    onEditFontColor = {},
-                    optionSelected = TextOption.FontColor
-                )
-            }*/
 
             Column(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
+                verticalArrangement = Arrangement.Bottom,
+                modifier = Modifier.align(Alignment.BottomCenter)
             ) {
-                FontTypeConfiguration(
-                    modifier = Modifier.fillMaxWidth(),
-                    selectedFontType = uiState.textState.fontType,
-                    fontTypeList = uiState.fontTypes,
-                    onTypeSelected = onUpdateFontType
-                )
-                TextOptions(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onDiscardChanges = {},
-                    onConfirmChanges = {},
-                    onEditFontFamily = {},
-                    onEditFontSize = {},
-                    onEditFontColor = {},
-                    optionSelected = TextOption.FontType
-                )
-            }
+                val currentMode = uiState.editModeState.mode
 
+                if (currentMode is EditMode.InEdition) {
+
+                    AnimatedContent(
+                        targetState = currentMode.textOption,
+                        label = "TextOptionAnimation"
+                    ) { option ->
+                        when (option) {
+                            TextOption.FontType -> FontTypeConfiguration(
+                                modifier = Modifier.fillMaxWidth(),
+                                selectedFontType = uiState.textStates.first().fontType,
+                                fontTypeList = uiState.fontTypes,
+                                onTypeSelected = onUpdateFontType
+                            )
+                            TextOption.FontSize -> FontSizeConfiguration(
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSizeFloat = uiState.textStates.first().fontSize,
+                                onFontSizeFloatChange = onUpdateFontSize
+                            )
+                            TextOption.FontColor -> FontColorConfiguration(
+                                modifier = Modifier.fillMaxWidth(),
+                                selectedColor = uiState.textStates.first().fontColor,
+                                fontColorList = uiState.fontColors,
+                                onColorSelected = onUpdateFontColor
+                            )
+                            null -> { }
+                        }
+                    }
+
+                    TextOptions(
+                        modifier = Modifier.fillMaxWidth(),
+                        onDiscardChanges = { /* TODO */ },
+                        onConfirmChanges = { /* TODO */ },
+                        onSelectFontTypeOption = onSelectEditFontTypeOption,
+                        onSelectEditFontSizeOption = onSelectEditFontSizeOption,
+                        onSelectEditFontColorOption = onSelectEditFontColorOption,
+                        optionSelected = currentMode.textOption
+                    )
+
+                } else {
+
+                    MainOptions(
+                        modifier = Modifier.fillMaxWidth(),
+                        canUndo = uiState.editModeState.canUndo,
+                        canRedo = uiState.editModeState.canRedo,
+                        onUndoEdition = onUndoEdition,
+                        onRedoEdition = onRedoEdition,
+                        onAddTextBox = onAddTextBox,
+                        onSaveMeme = onSaveMeme
+                    )
+                }
+            }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -179,7 +170,10 @@ private fun CreateMemeScreenContentPreview() {
             onUndoEdition = {},
             onRedoEdition = {},
             onAddTextBox = {},
-            onSaveMeme = {}
+            onSaveMeme = {},
+            onSelectEditFontTypeOption = {},
+            onSelectEditFontSizeOption = {},
+            onSelectEditFontColorOption = {}
         )
     }
 }

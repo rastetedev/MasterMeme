@@ -36,9 +36,9 @@ fun TextOptions(
     optionSelected: TextOption?,
     onDiscardChanges: () -> Unit,
     onConfirmChanges: () -> Unit,
-    onEditFontFamily: () -> Unit,
-    onEditFontSize: () -> Unit,
-    onEditFontColor: () -> Unit
+    onSelectFontTypeOption: () -> Unit,
+    onSelectEditFontSizeOption: () -> Unit,
+    onSelectEditFontColorOption: () -> Unit
 ) {
 
     Row(
@@ -63,7 +63,7 @@ fun TextOptions(
         Row(horizontalArrangement = Arrangement.Center) {
 
             TextOptionButton(
-                onClick = onEditFontFamily,
+                onClick = onSelectFontTypeOption,
                 selected = optionSelected == TextOption.FontType
             ) {
                 Icon(
@@ -77,7 +77,7 @@ fun TextOptions(
             Spacer(Modifier.width(16.dp))
 
             TextOptionButton(
-                onClick = onEditFontSize,
+                onClick = onSelectEditFontSizeOption,
                 selected = optionSelected == TextOption.FontSize
             ) {
                 Icon(
@@ -91,7 +91,7 @@ fun TextOptions(
             Spacer(Modifier.width(16.dp))
 
             TextOptionButton(
-                onClick = onEditFontColor,
+                onClick = onSelectEditFontColorOption,
                 selected = optionSelected == TextOption.FontColor
             ) {
                 Icon(

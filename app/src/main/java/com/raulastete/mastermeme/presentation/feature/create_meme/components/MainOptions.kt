@@ -30,6 +30,8 @@ import com.raulastete.mastermeme.presentation.ui.theme.ButtonGradientDefault
 @Composable
 fun MainOptions(
     modifier: Modifier = Modifier,
+    canUndo: Boolean,
+    canRedo: Boolean,
     onUndoEdition: () -> Unit,
     onRedoEdition: () -> Unit,
     onAddTextBox: () -> Unit,
@@ -43,7 +45,10 @@ fun MainOptions(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row {
-            IconButton(onClick = onUndoEdition) {
+            IconButton(
+                onClick = onUndoEdition,
+                enabled = canUndo
+            ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.undo),
                     contentDescription = null,
@@ -51,7 +56,10 @@ fun MainOptions(
                 )
             }
             Spacer(Modifier.width(12.dp))
-            IconButton(onClick = onRedoEdition) {
+            IconButton(
+                onClick = onRedoEdition,
+                enabled = canRedo
+            ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.redo),
                     contentDescription = null,
