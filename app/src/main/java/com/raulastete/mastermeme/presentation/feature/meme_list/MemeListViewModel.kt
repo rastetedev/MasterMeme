@@ -9,39 +9,95 @@ class MemeListViewModel : ViewModel() {
     private var _uiState = MutableStateFlow(MemeListUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun updateQuery(query: String) {
+    fun updateSearchTemplateQuery(query: String) {
         _uiState.value = _uiState.value.copy(
             modalState = _uiState.value.modalState.copy(query = query)
         )
     }
 
-    fun openModal() {
+    fun openTemplatesModal() {
         _uiState.value = _uiState.value.copy(
             modalState = _uiState.value.modalState.copy(isOpen = true)
         )
     }
 
-    fun dismissModal() {
+    fun dismissTemplatesModal() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isOpen = false, isSearchMode = false)
+            modalState = _uiState.value.modalState.copy(
+                isOpen = false,
+                isSearchBarDisplayed = false
+            )
         )
     }
 
-    fun openSearchTemplate() {
+    fun activateSearchTemplate() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isSearchMode = true)
+            modalState = _uiState.value.modalState.copy(isSearchBarDisplayed = true)
         )
     }
 
-    fun closeSearchTemplate() {
+    fun deactivateSearchTemplate() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isSearchMode = false)
+            modalState = _uiState.value.modalState.copy(isSearchBarDisplayed = false)
         )
     }
 
-    fun cleanQuery() {
+    fun cleanSearchTemplateQuery() {
         _uiState.value = _uiState.value.copy(
             modalState = _uiState.value.modalState.copy(query = "")
+        )
+    }
+
+    fun exitSelectionMode() {
+        _uiState.value = _uiState.value.copy(
+            isInSelectionMode = false
+        )
+    }
+
+    fun enterSelectionMode(firstMemeSelectedId: String) {
+        _uiState.value = _uiState.value.copy(
+            isInSelectionMode = false,
+            memes = uiState.value.memes.map { meme ->
+                if (meme.id == firstMemeSelectedId) {
+                    meme.copy(isSelected = true)
+                } else {
+                    meme
+                }
+            }
+        )
+    }
+
+    fun shareMemes() {
+
+    }
+
+    fun deleteMemes() {
+
+    }
+
+    fun toggleFavoriteState(memeId: String) {
+        _uiState.value = _uiState.value.copy(
+            isInSelectionMode = false,
+            memes = uiState.value.memes.map { meme ->
+                if (meme.id == memeId) {
+                    meme.copy(isFavorite = meme.isFavorite.not())
+                } else {
+                    meme
+                }
+            }
+        )
+    }
+
+    fun toggleSelectionState(memeId: String) {
+        _uiState.value = _uiState.value.copy(
+            isInSelectionMode = false,
+            memes = uiState.value.memes.map { meme ->
+                if (meme.id == memeId) {
+                    meme.copy(isSelected = meme.isSelected.not())
+                } else {
+                    meme
+                }
+            }
         )
     }
 

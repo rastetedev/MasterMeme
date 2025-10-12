@@ -17,8 +17,9 @@ fun MemeListGrid(
     paddingValues: PaddingValues,
     memes: List<MemeUiState>,
     isSelectionMode: Boolean,
-    onFavoriteClick: (id: String) -> Unit,
-    onSelectedClick: (id: String) -> Unit
+    onFavoriteClick: (memeId: String) -> Unit,
+    onSelectedClick: (memeId: String) -> Unit,
+    onEnterSelectionMode: (memeId: String) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -40,6 +41,9 @@ fun MemeListGrid(
                 },
                 onSelectionClick = {
                     onSelectedClick(it.id)
+                },
+                onLongSelectionClick = {
+                    onEnterSelectionMode(it.id)
                 }
             )
         }

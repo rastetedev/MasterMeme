@@ -2,7 +2,7 @@ package com.raulastete.mastermeme.presentation.feature.meme_list.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,15 +36,21 @@ fun MemeCard(
     isSelectionMode: Boolean,
     onFavoriteClick: () -> Unit,
     onSelectionClick: () -> Unit,
+    onLongSelectionClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .aspectRatio(1f) // Makes the card square
             .clip(MaterialTheme.shapes.medium)
-            .clickable {
-                if (isSelectionMode) onSelectionClick
-                else onFavoriteClick
-            }
+            .combinedClickable(
+                onClick = {
+                    if (isSelectionMode) onSelectionClick
+                    else onFavoriteClick
+                },
+                onLongClick = {
+                    if (!isSelectionMode) onLongSelectionClick
+                }
+            )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Background Image
@@ -145,7 +151,8 @@ private fun MemeCardNormalPreview() {
                 isSelected = false,
                 isSelectionMode = false,
                 onFavoriteClick = {},
-                onSelectionClick = {}
+                onSelectionClick = {},
+                onLongSelectionClick = {}
             )
         }
     }
@@ -163,7 +170,8 @@ private fun MemeCardFavoritePreview() {
                 isSelected = false,
                 isSelectionMode = false,
                 onFavoriteClick = {},
-                onSelectionClick = {}
+                onSelectionClick = {},
+                onLongSelectionClick = {}
             )
         }
     }
@@ -181,7 +189,8 @@ private fun MemeCardSelectionModePreview() {
                 isSelected = false,
                 isSelectionMode = true,
                 onFavoriteClick = {},
-                onSelectionClick = {}
+                onSelectionClick = {},
+                onLongSelectionClick = {}
             )
         }
     }
@@ -199,7 +208,8 @@ private fun MemeCardSelectionModeSelectedPreview() {
                 isSelected = true,
                 isSelectionMode = true,
                 onFavoriteClick = {},
-                onSelectionClick = {}
+                onSelectionClick = {},
+                onLongSelectionClick = {}
             )
         }
     }

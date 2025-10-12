@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
 
 @Composable
-fun EmptyMemeListContent(paddingValues: PaddingValues) {
+fun EmptyMemeListPlaceholder(paddingValues: PaddingValues) {
     Column(
         Modifier
             .fillMaxSize()

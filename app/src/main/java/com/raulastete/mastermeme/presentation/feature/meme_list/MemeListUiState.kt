@@ -4,7 +4,7 @@ import com.raulastete.mastermeme.R
 
 data class MemeListUiState(
     val memes: List<MemeUiState> = emptyList(),
-    val isSelectionMode: Boolean = false,
+    val isInSelectionMode: Boolean = false,
     val modalState: ModalState = ModalState(),
 ) {
     val selectedMemes = memes.filter { it.isSelected }
@@ -12,7 +12,7 @@ data class MemeListUiState(
 
 data class ModalState(
     val isOpen: Boolean = false,
-    val isSearchMode: Boolean = false,
+    val isSearchBarDisplayed: Boolean = false,
     val query: String = "",
     val templates: List<Int> = memeTemplateResourceList
 )
