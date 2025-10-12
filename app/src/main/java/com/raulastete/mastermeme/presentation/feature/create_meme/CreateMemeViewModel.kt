@@ -2,6 +2,7 @@ package com.raulastete.mastermeme.presentation.feature.create_meme
 
 import androidx.lifecycle.ViewModel
 import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
+import com.raulastete.mastermeme.presentation.model.MemeFontTypeUi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -20,6 +21,11 @@ class CreateMemeViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(
             textState = _uiState.value.textState.copy(fontColor = fontColor)
         )
+    }
 
+    fun updateFontType(fontType: MemeFontTypeUi) {
+        _uiState.value = _uiState.value.copy(
+            textState = _uiState.value.textState.copy(fontType = fontType)
+        )
     }
 }

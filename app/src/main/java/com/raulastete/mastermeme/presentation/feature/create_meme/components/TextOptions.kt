@@ -25,7 +25,7 @@ import com.raulastete.mastermeme.R
 import com.raulastete.mastermeme.presentation.ui.theme.White
 
 enum class TextOption {
-    FontFamily,
+    FontType,
     FontSize,
     FontColor
 }
@@ -64,7 +64,7 @@ fun TextOptions(
 
             TextOptionButton(
                 onClick = onEditFontFamily,
-                selected = optionSelected == TextOption.FontFamily
+                selected = optionSelected == TextOption.FontType
             ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.text_style),

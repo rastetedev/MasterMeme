@@ -15,9 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontColorConfiguration
+import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontTypeConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOptions
 import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
+import com.raulastete.mastermeme.presentation.model.MemeFontTypeUi
 import com.raulastete.mastermeme.presentation.ui.components.NavigationalTopBar
 
 @Composable
@@ -33,6 +35,7 @@ fun CreateMemeScreen(
         navigateBack = navigateBack,
         onUpdateFontSize = viewModel::updateFontSize,
         onUpdateFontColor = viewModel::updateFontColor,
+        onUpdateFontType = viewModel:: updateFontType,
         onUndoEdition = {},
         onRedoEdition = {},
         onAddTextBox = {},
@@ -45,6 +48,7 @@ private fun CreateMemeScreenContent(
     navigateBack: () -> Unit,
     onUpdateFontSize: (Float) -> Unit,
     onUpdateFontColor: (MemeFontColorUi) -> Unit,
+    onUpdateFontType: (MemeFontTypeUi) -> Unit,
     onUndoEdition: () -> Unit,
     onRedoEdition: () -> Unit,
     onAddTextBox: () -> Unit,
@@ -96,7 +100,7 @@ private fun CreateMemeScreenContent(
                 )
             }*/
 
-            Column(
+            /*Column(
                 Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
@@ -117,7 +121,31 @@ private fun CreateMemeScreenContent(
                     onEditFontColor = {},
                     optionSelected = TextOption.FontColor
                 )
+            }*/
+
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+            ) {
+                FontTypeConfiguration(
+                    modifier = Modifier.fillMaxWidth(),
+                    selectedFontType = uiState.textState.fontType,
+                    fontTypeList = uiState.fontTypes,
+                    onTypeSelected = onUpdateFontType
+                )
+                TextOptions(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onDiscardChanges = {},
+                    onConfirmChanges = {},
+                    onEditFontFamily = {},
+                    onEditFontSize = {},
+                    onEditFontColor = {},
+                    optionSelected = TextOption.FontType
+                )
             }
+
         }
     }
 }
@@ -132,6 +160,7 @@ private fun CreateMemeScreenContentPreview() {
             navigateBack = {},
             onUpdateFontSize = {},
             onUpdateFontColor = {},
+            onUpdateFontType = {},
             onUndoEdition = {},
             onRedoEdition = {},
             onAddTextBox = {},
