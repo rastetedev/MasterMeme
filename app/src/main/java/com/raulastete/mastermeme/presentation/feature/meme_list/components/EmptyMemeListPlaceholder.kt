@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
@@ -32,6 +33,6 @@ fun EmptyMemeListPlaceholder(paddingValues: PaddingValues) {
             contentDescription = null
         )
         Spacer(Modifier.height(34.dp))
-        Text("Tap + button to create your first meme", style = MaterialTheme.typography.bodySmall)
+        Text(stringResource(R.string.empty_meme_list_placeholder), style = MaterialTheme.typography.bodySmall)
     }
 }

@@ -11,19 +11,19 @@ class MemeListViewModel : ViewModel() {
 
     fun updateSearchTemplateQuery(query: String) {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(query = query)
+            templatesModalState = _uiState.value.templatesModalState.copy(query = query)
         )
     }
 
     fun openTemplatesModal() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isOpen = true)
+            templatesModalState = _uiState.value.templatesModalState.copy(isOpen = true)
         )
     }
 
     fun dismissTemplatesModal() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(
+            templatesModalState = _uiState.value.templatesModalState.copy(
                 isOpen = false,
                 isSearchBarDisplayed = false
             )
@@ -32,19 +32,19 @@ class MemeListViewModel : ViewModel() {
 
     fun activateSearchTemplate() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isSearchBarDisplayed = true)
+            templatesModalState = _uiState.value.templatesModalState.copy(isSearchBarDisplayed = true)
         )
     }
 
     fun deactivateSearchTemplate() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(isSearchBarDisplayed = false)
+            templatesModalState = _uiState.value.templatesModalState.copy(isSearchBarDisplayed = false)
         )
     }
 
     fun cleanSearchTemplateQuery() {
         _uiState.value = _uiState.value.copy(
-            modalState = _uiState.value.modalState.copy(query = "")
+            templatesModalState = _uiState.value.templatesModalState.copy(query = "")
         )
     }
 
@@ -57,13 +57,15 @@ class MemeListViewModel : ViewModel() {
     fun enterSelectionMode(firstMemeSelectedId: String) {
         _uiState.value = _uiState.value.copy(
             isInSelectionMode = false,
-            memes = uiState.value.memes.map { meme ->
-                if (meme.id == firstMemeSelectedId) {
-                    meme.copy(isSelected = true)
-                } else {
-                    meme
+            memeListState = uiState.value.memeListState.copy(
+                memes = uiState.value.memeListState.memes.map { meme ->
+                    if (meme.id == firstMemeSelectedId) {
+                        meme.copy(isSelected = true)
+                    } else {
+                        meme
+                    }
                 }
-            }
+            )
         )
     }
 
@@ -78,27 +80,30 @@ class MemeListViewModel : ViewModel() {
     fun toggleFavoriteState(memeId: String) {
         _uiState.value = _uiState.value.copy(
             isInSelectionMode = false,
-            memes = uiState.value.memes.map { meme ->
-                if (meme.id == memeId) {
-                    meme.copy(isFavorite = meme.isFavorite.not())
-                } else {
-                    meme
+            memeListState = uiState.value.memeListState.copy(
+                memes = uiState.value.memeListState.memes.map { meme ->
+                    if (meme.id == memeId) {
+                        meme.copy(isFavorite = meme.isFavorite.not())
+                    } else {
+                        meme
+                    }
                 }
-            }
+            )
         )
     }
 
     fun toggleSelectionState(memeId: String) {
         _uiState.value = _uiState.value.copy(
             isInSelectionMode = false,
-            memes = uiState.value.memes.map { meme ->
-                if (meme.id == memeId) {
-                    meme.copy(isSelected = meme.isSelected.not())
-                } else {
-                    meme
+            memeListState = uiState.value.memeListState.copy(
+                memes = uiState.value.memeListState.memes.map { meme ->
+                    if (meme.id == memeId) {
+                        meme.copy(isSelected = meme.isSelected.not())
+                    } else {
+                        meme
+                    }
                 }
-            }
+            )
         )
     }
-
 }

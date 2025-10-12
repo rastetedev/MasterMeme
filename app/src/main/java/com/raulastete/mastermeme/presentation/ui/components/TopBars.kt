@@ -4,9 +4,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -18,35 +15,48 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.raulastete.mastermeme.R
+import com.raulastete.mastermeme.presentation.feature.meme_list.SortingMode
+import com.raulastete.mastermeme.presentation.feature.meme_list.toText
 
-/**
- * Estado normal: solo muestra un título.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NormalTopBar(title: String) {
     TopAppBar(
-        title = { Text(text = title, style = MaterialTheme.typography.headlineLarge) },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
         )
     )
 }
 
-/**
- * Estado con navegación: muestra un botón de retroceso y un título centrado.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationalTopBar(title: String, onNavigateBack: () -> Unit) {
     CenterAlignedTopAppBar(
-        title = { Text(text = title, style = MaterialTheme.typography.headlineLarge) },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Navigate back"
+                    contentDescription = "Navigate back",
+                    tint = MaterialTheme.colorScheme.secondaryFixedDim
                 )
             }
         },
@@ -56,26 +66,34 @@ fun NavigationalTopBar(title: String, onNavigateBack: () -> Unit) {
     )
 }
 
-/**
- * Estado con acciones: muestra un título y un indicador de ordenación.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemsTopBar(title: String, sortIndicator: String, onSortClick: () -> Unit) {
+fun ItemsTopBar(title: String, sortingMode: SortingMode, onSortClick: (SortingMode) -> Unit) {
     TopAppBar(
-        title = { Text(text = title) },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
         actions = {
-            TextButton(onClick = onSortClick) {
-                Text(text = sortIndicator)
-                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+            TextButton(onClick = {  }) {
+                Text(text = sortingMode.toText())
+                Icon(
+                    Icons.Default.ArrowDropDown,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondaryFixedDim
+                )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
     )
 }
 
-/**
- * Estado de selección: muestra un botón para salir, el recuento de seleccionados y acciones.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectionTopBar(
@@ -85,12 +103,19 @@ fun SelectionTopBar(
     onDeleteClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(text = "$selectedCount selected") },
+        title = {
+            Text(
+                text = "$selectedCount selected",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onExitSelectionMode) {
                 Icon(
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Exit selection mode"
+                    imageVector = ImageVector.vectorResource(R.drawable.close),
+                    contentDescription = "Exit selection mode",
+                    tint = MaterialTheme.colorScheme.secondaryFixedDim
                 )
             }
         },
@@ -98,18 +123,23 @@ fun SelectionTopBar(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onShareClick) {
                     Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = "Share selected items"
+                        imageVector = ImageVector.vectorResource(R.drawable.share),
+                        contentDescription = "Share selected items",
+                        tint = MaterialTheme.colorScheme.secondaryFixedDim
                     )
                 }
                 IconButton(onClick = onDeleteClick) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete selected items"
+                        imageVector = ImageVector.vectorResource(R.drawable.delete),
+                        contentDescription = "Delete selected items",
+                        tint = MaterialTheme.colorScheme.secondaryFixedDim
                     )
                 }
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        )
     )
 }
 
@@ -129,7 +159,7 @@ private fun NavigationalTopBarPreview() {
 @Preview(showBackground = true, name = "Items TopBar")
 @Composable
 private fun ItemsTopBarPreview() {
-    ItemsTopBar(title = "My Memes", sortIndicator = "Newest first", onSortClick = {})
+    ItemsTopBar(title = "My Memes", sortingMode = SortingMode.NEWEST_FIRST, onSortClick = {})
 }
 
 @Preview(showBackground = true, name = "Selection TopBar")

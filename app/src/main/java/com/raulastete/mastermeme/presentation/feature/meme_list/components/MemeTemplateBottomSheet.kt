@@ -41,14 +41,14 @@ fun MemeTemplateBottomSheet(
                 .add(WindowInsets(left = 16.dp, right = 16.dp))
         }
     ) {
-        AnimatedContent(uiState.modalState.isSearchBarDisplayed) { isSearchBarDisplayed ->
+        AnimatedContent(uiState.templatesModalState.isSearchBarDisplayed) { isSearchBarDisplayed ->
             if (isSearchBarDisplayed) {
                 SearchTemplateMode(
-                    query = uiState.modalState.query,
+                    query = uiState.templatesModalState.query,
                     onQueryChange = onQueryChange,
                     onCloseSearchTemplate = onCloseSearchTemplate,
                     onCleanQuery = onCleanQuery,
-                    templatesQuantity = uiState.modalState.templates.size
+                    templatesQuantity = uiState.templatesModalState.templates.size
                 )
             } else {
                 ModalDefaultHeader(
@@ -62,7 +62,7 @@ fun MemeTemplateBottomSheet(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2)
         ) {
-            items(uiState.modalState.templates) {
+            items(uiState.templatesModalState.templates) {
                 MemeTemplateCard(it) {
                     navigateToCreateMeme(it)
                 }

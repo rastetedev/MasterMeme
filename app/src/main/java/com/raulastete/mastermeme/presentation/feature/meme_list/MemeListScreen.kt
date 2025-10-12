@@ -15,6 +15,7 @@ import com.raulastete.mastermeme.presentation.feature.meme_list.components.Empty
 import com.raulastete.mastermeme.presentation.feature.meme_list.components.MemeListGrid
 import com.raulastete.mastermeme.presentation.feature.meme_list.components.MemeTemplateBottomSheet
 import com.raulastete.mastermeme.presentation.ui.components.GradientFab
+import com.raulastete.mastermeme.presentation.ui.components.ItemsTopBar
 import com.raulastete.mastermeme.presentation.ui.components.NormalTopBar
 import com.raulastete.mastermeme.presentation.ui.components.SelectionTopBar
 
@@ -63,18 +64,28 @@ private fun MemeListScreenContent(
     onExitSelectionMode: () -> Unit
 ) {
 
+    val memes = uiState.memeListState.memes
+
     Scaffold(
         topBar = {
             AnimatedContent(uiState.isInSelectionMode) { isSelectionMode ->
                 if (isSelectionMode) {
                     SelectionTopBar(
-                        selectedCount = uiState.selectedMemes.size,
+                        selectedCount = uiState.memeListState.selectedMemes.size,
                         onExitSelectionMode = onExitSelectionMode,
                         onShareClick = onShareMemes,
                         onDeleteClick = onDeleteMemes
                     )
                 } else {
-                    NormalTopBar(title = stringResource(R.string.meme_list_title))
+                    if(memes.isEmpty()){
+                        NormalTopBar(title = stringResource(R.string.meme_list_title))
+                    } else {
+                        ItemsTopBar(
+                            title = stringResource(R.string.meme_list_title),
+                            sortingMode = uiState.memeListState.sortingMode,
+                            onSortClick = {}
+                        )
+                    }
                 }
             }
         },
@@ -83,11 +94,11 @@ private fun MemeListScreenContent(
         }
     ) { paddingValues ->
         when {
-            uiState.memes.isEmpty() -> EmptyMemeListPlaceholder(paddingValues)
+            memes.isEmpty() -> EmptyMemeListPlaceholder(paddingValues)
 
             else -> MemeListGrid(
                 paddingValues,
-                memes = uiState.memes,
+                memes = memes,
                 isSelectionMode = uiState.isInSelectionMode,
                 onFavoriteClick = onToggleMemeFavoriteState,
                 onSelectedClick = onToggleMemeSelectionState,
@@ -95,7 +106,7 @@ private fun MemeListScreenContent(
             )
         }
 
-        if (uiState.modalState.isOpen) {
+        if (uiState.templatesModalState.isOpen) {
             MemeTemplateBottomSheet(
                 uiState = uiState,
                 onOpenSearchTemplate = onActivateSearchTemplate,

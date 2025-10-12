@@ -3,25 +3,40 @@ package com.raulastete.mastermeme.presentation.feature.meme_list
 import com.raulastete.mastermeme.R
 
 data class MemeListUiState(
-    val memes: List<MemeUiState> = emptyList(),
+    val memeListState: MemeListState = MemeListState(),
     val isInSelectionMode: Boolean = false,
-    val modalState: ModalState = ModalState(),
+    val templatesModalState: TemplatesModalState = TemplatesModalState(),
+)
+
+data class MemeListState(
+    val memes: List<MemeUiState> = emptyList(),
+    val sortingMode : SortingMode = SortingMode.NEWEST_FIRST,
 ) {
     val selectedMemes = memes.filter { it.isSelected }
 }
-
-data class ModalState(
-    val isOpen: Boolean = false,
-    val isSearchBarDisplayed: Boolean = false,
-    val query: String = "",
-    val templates: List<Int> = memeTemplateResourceList
-)
 
 data class MemeUiState(
     val id: String = "",
     val image: String = "",
     val isFavorite: Boolean = false,
     val isSelected: Boolean = false,
+)
+
+enum class SortingMode {
+    NEWEST_FIRST,
+    FAVORITES_FIRST
+}
+
+fun SortingMode.toText() = when (this) {
+    SortingMode.NEWEST_FIRST -> "Newest first"
+    SortingMode.FAVORITES_FIRST -> "Favorites first"
+}
+
+data class TemplatesModalState(
+    val isOpen: Boolean = false,
+    val isSearchBarDisplayed: Boolean = false,
+    val query: String = "",
+    val templates: List<Int> = memeTemplateResourceList
 )
 
 val memeTemplateResourceList = listOf(

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,8 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raulastete.mastermeme.R
 import com.raulastete.mastermeme.presentation.ui.theme.PurpleMedium2
 import com.raulastete.mastermeme.presentation.ui.theme.White
 
@@ -77,7 +79,7 @@ fun SearchTemplateMode(
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Default.Close,
+                    imageVector = ImageVector.vectorResource(R.drawable.close),
                     contentDescription = "Clean Search Query",
                 )
             }
