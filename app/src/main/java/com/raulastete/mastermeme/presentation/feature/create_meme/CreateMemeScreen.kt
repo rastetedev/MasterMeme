@@ -1,4 +1,4 @@
-package com.raulastete.mastermeme.feature.create_meme
+package com.raulastete.mastermeme.presentation.feature.create_meme
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,15 +21,30 @@ import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
 import com.raulastete.mastermeme.presentation.ui.components.NavigationalTopBar
 
 @Composable
-fun CreateMemeScreen(navigateBack: () -> Unit) {
+fun CreateMemeScreen(
+    viewModel: CreateMemeViewModel = viewModel(),
+    navigateBack: () -> Unit
+) {
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     CreateMemeScreenContent(
+        uiState = uiState,
         navigateBack = navigateBack,
-        onUndoEdition = {}, onRedoEdition = {}, onAddTextBox = {}, onSaveMeme = {})
+        onUpdateFontSize = viewModel::updateFontSize,
+        onUpdateFontColor = viewModel::updateFontColor,
+        onUndoEdition = {},
+        onRedoEdition = {},
+        onAddTextBox = {},
+        onSaveMeme = {})
 }
 
 @Composable
 private fun CreateMemeScreenContent(
+    uiState: CreateMemeUiState,
     navigateBack: () -> Unit,
+    onUpdateFontSize: (Float) -> Unit,
+    onUpdateFontColor: (MemeFontColorUi) -> Unit,
     onUndoEdition: () -> Unit,
     onRedoEdition: () -> Unit,
     onAddTextBox: () -> Unit,
@@ -60,16 +74,15 @@ private fun CreateMemeScreenContent(
                 onSaveMeme = onSaveMeme
             )*/
 
-            var fonSizeFloat = remember { mutableStateOf(0.5f) }
-            Column(Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)) {
+            /*Column(
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+            ) {
                 FontSizeConfiguration(
                     modifier = Modifier.fillMaxWidth(),
-                    fontSizeFloat = fonSizeFloat.value,
-                    onFontSizeFloatChange = {
-                        fonSizeFloat.value = it
-                    }
+                    fontSizeFloat = uiState.textState.fontSize,
+                    onFontSizeFloatChange = onUpdateFontSize
                 )
                 TextOptions(
                     modifier = Modifier
@@ -81,9 +94,31 @@ private fun CreateMemeScreenContent(
                     onEditFontColor = {},
                     optionSelected = TextOption.FontSize
                 )
+            }*/
+
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+            ) {
+                FontColorConfiguration(
+                    modifier = Modifier.fillMaxWidth(),
+                    selectedColor = uiState.textState.fontColor,
+                    fontColorList = uiState.fontColors,
+                    onColorSelected = onUpdateFontColor
+                )
+                TextOptions(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onDiscardChanges = {},
+                    onConfirmChanges = {},
+                    onEditFontFamily = {},
+                    onEditFontSize = {},
+                    onEditFontColor = {},
+                    optionSelected = TextOption.FontColor
+                )
             }
         }
-
     }
 }
 
@@ -93,10 +128,14 @@ private fun CreateMemeScreenContent(
 private fun CreateMemeScreenContentPreview() {
     MaterialTheme {
         CreateMemeScreenContent(
+            uiState = CreateMemeUiState(),
             navigateBack = {},
+            onUpdateFontSize = {},
+            onUpdateFontColor = {},
             onUndoEdition = {},
             onRedoEdition = {},
             onAddTextBox = {},
-            onSaveMeme = {})
+            onSaveMeme = {}
+        )
     }
 }

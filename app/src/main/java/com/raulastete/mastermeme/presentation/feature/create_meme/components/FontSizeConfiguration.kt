@@ -85,7 +85,7 @@ fun FontSizeConfiguration(
                         // Draw outer circle
                         drawCircle(
                             color = sliderColor.copy(alpha = 0.25f),
-                            radius =animatedOuterRadius.toPx()
+                            radius = animatedOuterRadius.toPx()
                         )
 
                         // Draw inner circle
