@@ -44,11 +44,11 @@ fun MemeCard(
             .clip(MaterialTheme.shapes.medium)
             .combinedClickable(
                 onClick = {
-                    if (isSelectionMode) onSelectionClick
-                    else onFavoriteClick
+                    if (isSelectionMode) onSelectionClick()
+                    else onFavoriteClick()
                 },
                 onLongClick = {
-                    if (!isSelectionMode) onLongSelectionClick
+                    if (!isSelectionMode) onLongSelectionClick()
                 }
             )
     ) {

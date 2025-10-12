@@ -79,8 +79,11 @@ fun ItemsTopBar(title: String, sortingMode: SortingMode, onSortClick: (SortingMo
             )
         },
         actions = {
-            TextButton(onClick = {  }) {
-                Text(text = sortingMode.toText())
+            TextButton(onClick = { }) {
+                Text(
+                    text = sortingMode.toText(),
+                    color = MaterialTheme.colorScheme.secondaryFixedDim
+                )
                 Icon(
                     Icons.Default.ArrowDropDown,
                     contentDescription = null,
