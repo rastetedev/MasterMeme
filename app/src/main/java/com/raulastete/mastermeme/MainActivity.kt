@@ -15,7 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(PrimaryContainer.value.toInt())
+            statusBarStyle = SystemBarStyle.dark(PrimaryContainer.value.toInt()),
+            navigationBarStyle = SystemBarStyle.dark(PrimaryContainer.value.toInt())
         )
         setContent {
             MasterMemeTheme {
