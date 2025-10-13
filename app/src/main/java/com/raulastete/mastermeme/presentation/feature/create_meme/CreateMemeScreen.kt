@@ -43,6 +43,8 @@ fun CreateMemeScreen(
         templateResourceId = templateResourceId,
         uiState = uiState,
         navigateBack = navigateBack,
+        onDiscardLatestEdition = { viewModel.discardLatestEdition() },
+        onConfirmLatestEdition = { viewModel.confirmLatestEdition() },
         onSelectEditFontTypeOption = viewModel::selectEditFontTypeOption,
         onSelectEditFontSizeOption = viewModel::selectEditFontSizeOption,
         onSelectEditFontColorOption = viewModel::selectEditFontColorOption,
@@ -60,6 +62,8 @@ private fun CreateMemeScreenContent(
     @DrawableRes templateResourceId: Int,
     uiState: CreateMemeUiState,
     navigateBack: () -> Unit,
+    onDiscardLatestEdition: () -> Unit,
+    onConfirmLatestEdition: () -> Unit,
     onSelectEditFontTypeOption: () -> Unit,
     onSelectEditFontSizeOption: () -> Unit,
     onSelectEditFontColorOption: () -> Unit,
@@ -114,25 +118,28 @@ private fun CreateMemeScreenContent(
                                 fontTypeList = uiState.fontTypes,
                                 onTypeSelected = onUpdateFontType
                             )
+
                             TextOption.FontSize -> FontSizeConfiguration(
                                 modifier = Modifier.fillMaxWidth(),
                                 fontSizeFloat = uiState.textStates.first().fontSize,
                                 onFontSizeFloatChange = onUpdateFontSize
                             )
+
                             TextOption.FontColor -> FontColorConfiguration(
                                 modifier = Modifier.fillMaxWidth(),
                                 selectedColor = uiState.textStates.first().fontColor,
                                 fontColorList = uiState.fontColors,
                                 onColorSelected = onUpdateFontColor
                             )
-                            null -> { }
+
+                            null -> {}
                         }
                     }
 
                     TextOptions(
                         modifier = Modifier.fillMaxWidth(),
-                        onDiscardChanges = { /* TODO */ },
-                        onConfirmChanges = { /* TODO */ },
+                        onDiscardChanges = onDiscardLatestEdition,
+                        onConfirmChanges = onConfirmLatestEdition,
                         onSelectFontTypeOption = onSelectEditFontTypeOption,
                         onSelectEditFontSizeOption = onSelectEditFontSizeOption,
                         onSelectEditFontColorOption = onSelectEditFontColorOption,
@@ -140,7 +147,6 @@ private fun CreateMemeScreenContent(
                     )
 
                 } else {
-
                     MainOptions(
                         modifier = Modifier.fillMaxWidth(),
                         canUndo = uiState.editModeState.canUndo,
@@ -173,7 +179,9 @@ private fun CreateMemeScreenContentPreview() {
             onSaveMeme = {},
             onSelectEditFontTypeOption = {},
             onSelectEditFontSizeOption = {},
-            onSelectEditFontColorOption = {}
+            onSelectEditFontColorOption = {},
+            onDiscardLatestEdition = {},
+            onConfirmLatestEdition = {}
         )
     }
 }

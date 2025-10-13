@@ -80,4 +80,22 @@ class CreateMemeViewModel : ViewModel() {
             )
         )
     }
+
+    //TODO: Implement with real logic later
+    fun discardLatestEdition(){
+        _uiState.value = _uiState.value.copy(
+            editModeState = EditModeState(
+                mode = EditMode.OnHold
+            )
+        )
+    }
+
+    //TODO: Implement with real logic later
+    fun confirmLatestEdition(){
+        _uiState.value = _uiState.value.copy(
+            editModeState = EditModeState(
+                mode = EditMode.OnHold
+            )
+        )
+    }
 }
