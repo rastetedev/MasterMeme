@@ -1,7 +1,6 @@
 package com.raulastete.mastermeme.presentation.feature.create_meme
 
 import androidx.lifecycle.ViewModel
-import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
 import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
 import com.raulastete.mastermeme.presentation.model.MemeFontTypeUi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,7 @@ class CreateMemeViewModel : ViewModel() {
 
     fun updateFontSize(fontSize: Float, textId: String) {
         _uiState.value = _uiState.value.copy(
-            textStates = uiState.value.textStates.map { textState ->
+            memeTextStates = uiState.value.memeTextStates.map { textState ->
                 if (textState.uuid == textId) {
                     textState.copy(fontSize = fontSize)
                 } else {
@@ -26,7 +25,7 @@ class CreateMemeViewModel : ViewModel() {
 
     fun updateFontColor(fontColor: MemeFontColorUi, textId: String) {
         _uiState.value = _uiState.value.copy(
-            textStates = uiState.value.textStates.map { textState ->
+            memeTextStates = uiState.value.memeTextStates.map { textState ->
                 if (textState.uuid == textId) {
                     textState.copy(fontColor = fontColor)
                 } else {
@@ -38,7 +37,7 @@ class CreateMemeViewModel : ViewModel() {
 
     fun updateFontType(fontType: MemeFontTypeUi, textId: String) {
         _uiState.value = _uiState.value.copy(
-            textStates = uiState.value.textStates.map { textState ->
+            memeTextStates = uiState.value.memeTextStates.map { textState ->
                 if (textState.uuid == textId) {
                     textState.copy(fontType = fontType)
                 } else {
@@ -50,33 +49,33 @@ class CreateMemeViewModel : ViewModel() {
 
     fun addNewTextBox() {
         _uiState.value = _uiState.value.copy(
-            textStates = uiState.value.textStates + TextState(),
-            editModeState = EditModeState(
-                mode = EditMode.InEdition(textOption = null)
+            memeTextStates = uiState.value.memeTextStates + MemeTextState(),
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.InEdition(currentTextOption = null)
             )
         )
     }
 
     fun selectEditFontTypeOption(){
         _uiState.value = _uiState.value.copy(
-            editModeState = EditModeState(
-                mode = EditMode.InEdition(textOption = TextOption.FontType)
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.InEdition(currentTextOption = TextOption.FontType)
             )
         )
     }
 
     fun selectEditFontColorOption(){
         _uiState.value = _uiState.value.copy(
-            editModeState = EditModeState(
-                mode = EditMode.InEdition(textOption = TextOption.FontColor)
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.InEdition(currentTextOption = TextOption.FontColor)
             )
         )
     }
 
     fun selectEditFontSizeOption(){
         _uiState.value = _uiState.value.copy(
-            editModeState = EditModeState(
-                mode = EditMode.InEdition(textOption = TextOption.FontSize)
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.InEdition(currentTextOption = TextOption.FontSize)
             )
         )
     }
@@ -84,8 +83,8 @@ class CreateMemeViewModel : ViewModel() {
     //TODO: Implement with real logic later
     fun discardLatestEdition(){
         _uiState.value = _uiState.value.copy(
-            editModeState = EditModeState(
-                mode = EditMode.OnHold
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.OnHold
             )
         )
     }
@@ -93,8 +92,8 @@ class CreateMemeViewModel : ViewModel() {
     //TODO: Implement with real logic later
     fun confirmLatestEdition(){
         _uiState.value = _uiState.value.copy(
-            editModeState = EditModeState(
-                mode = EditMode.OnHold
+            editionButtonsState = EditionButtonsState(
+                editMode = EditMode.OnHold
             )
         )
     }

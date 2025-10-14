@@ -22,13 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
+import com.raulastete.mastermeme.presentation.feature.create_meme.TextOption
 import com.raulastete.mastermeme.presentation.ui.theme.White
-
-enum class TextOption {
-    FontType,
-    FontSize,
-    FontColor
-}
 
 @Composable
 fun TextOptions(

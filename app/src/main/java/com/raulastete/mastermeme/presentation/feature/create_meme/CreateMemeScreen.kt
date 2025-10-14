@@ -2,6 +2,7 @@ package com.raulastete.mastermeme.presentation.feature.create_meme
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,18 +14,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import com.raulastete.mastermeme.R
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontColorConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontSizeConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.FontTypeConfiguration
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.MainOptions
-import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOption
 import com.raulastete.mastermeme.presentation.feature.create_meme.components.TextOptions
 import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
 import com.raulastete.mastermeme.presentation.model.MemeFontTypeUi
@@ -75,10 +85,18 @@ private fun CreateMemeScreenContent(
     onAddTextBox: () -> Unit,
     onSaveMeme: () -> Unit
 ) {
+
+    val scope = rememberCoroutineScope()
+    val resources = LocalResources.current
+
+    val imageBitmap =
+        remember(templateResourceId) { ImageBitmap.imageResource(resources, templateResourceId) }
+    val imageAspectRatio = imageBitmap.width.toFloat() / imageBitmap.height.toFloat()
+
     Scaffold(
         topBar = {
             NavigationalTopBar(
-                title = "New meme",
+                title = stringResource(R.string.create_meme_title),
                 onNavigateBack = navigateBack
             )
         }
@@ -89,45 +107,45 @@ private fun CreateMemeScreenContent(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-
-            AsyncImage(
-                model = templateResourceId,
+            Image(
+                bitmap = imageBitmap,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
+                    .align(Alignment.Center)
                     .fillMaxWidth()
-                    .aspectRatio(1f)
+                    .aspectRatio(imageAspectRatio)
             )
 
             Column(
                 verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier.align(Alignment.BottomCenter)
             ) {
-                val currentMode = uiState.editModeState.mode
+                val currentMode = uiState.editionButtonsState.editMode
 
                 if (currentMode is EditMode.InEdition) {
 
                     AnimatedContent(
-                        targetState = currentMode.textOption,
+                        targetState = currentMode.currentTextOption,
                         label = "TextOptionAnimation"
                     ) { option ->
                         when (option) {
                             TextOption.FontType -> FontTypeConfiguration(
                                 modifier = Modifier.fillMaxWidth(),
-                                selectedFontType = uiState.textStates.first().fontType,
+                                selectedFontType = uiState.memeTextStates.first().fontType,
                                 fontTypeList = uiState.fontTypes,
                                 onTypeSelected = onUpdateFontType
                             )
 
                             TextOption.FontSize -> FontSizeConfiguration(
                                 modifier = Modifier.fillMaxWidth(),
-                                fontSizeFloat = uiState.textStates.first().fontSize,
+                                fontSizeFloat = uiState.memeTextStates.first().fontSize,
                                 onFontSizeFloatChange = onUpdateFontSize
                             )
 
                             TextOption.FontColor -> FontColorConfiguration(
                                 modifier = Modifier.fillMaxWidth(),
-                                selectedColor = uiState.textStates.first().fontColor,
+                                selectedColor = uiState.memeTextStates.first().fontColor,
                                 fontColorList = uiState.fontColors,
                                 onColorSelected = onUpdateFontColor
                             )
@@ -143,14 +161,14 @@ private fun CreateMemeScreenContent(
                         onSelectFontTypeOption = onSelectEditFontTypeOption,
                         onSelectEditFontSizeOption = onSelectEditFontSizeOption,
                         onSelectEditFontColorOption = onSelectEditFontColorOption,
-                        optionSelected = currentMode.textOption
+                        optionSelected = currentMode.currentTextOption
                     )
 
                 } else {
                     MainOptions(
                         modifier = Modifier.fillMaxWidth(),
-                        canUndo = uiState.editModeState.canUndo,
-                        canRedo = uiState.editModeState.canRedo,
+                        canUndo = uiState.editionButtonsState.canUndo,
+                        canRedo = uiState.editionButtonsState.canRedo,
                         onUndoEdition = onUndoEdition,
                         onRedoEdition = onRedoEdition,
                         onAddTextBox = onAddTextBox,
@@ -161,6 +179,41 @@ private fun CreateMemeScreenContent(
         }
     }
 }
+
+private fun calculateImageBounds(containerSize: IntSize, imageAspectRatio: Float): Rect {
+
+    if (containerSize.height == 0) {
+        return Rect.Zero
+    }
+
+    val imageWidth: Float
+    val imageHeight: Float
+
+    // Determine the final dimensions of the image, fitting it within the container
+    if (containerSize.aspectRatio > imageAspectRatio) {
+        // Container is wider than the image (letterbox)
+        imageHeight = containerSize.height.toFloat()
+        imageWidth = imageHeight * imageAspectRatio
+    } else {
+        // Container is taller than or same as the image (pillarbox)
+        imageWidth = containerSize.width.toFloat()
+        imageHeight = imageWidth / imageAspectRatio
+    }
+
+    // Calculate the top-left corner to center the image
+    val left = (containerSize.width - imageWidth) / 2f
+    val top = (containerSize.height - imageHeight) / 2f
+
+    return Rect(
+        left = left,
+        top = top,
+        right = left + imageWidth,
+        bottom = top + imageHeight
+    )
+}
+
+val IntSize.aspectRatio: Float
+    get() = if (height == 0) 0f else width.toFloat() / height
 
 @Preview(showBackground = true)
 @Composable

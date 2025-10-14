@@ -9,4 +9,6 @@
     <string name="default_modal_header_title">Choose template</string>
     <string name="default_modal_header_subtitle">Choose template for your next meme masterpiece</string>
     <string name="no_memes_found">No memes found :C</string>
+
+    <string name="create_meme_title">New meme</string>
 </resources>
