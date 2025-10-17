@@ -15,7 +15,7 @@ data class CreateMemeUiState(
     val editionSource: EditionSource? = null,
     val showSaveMemeOptions: Boolean = false,
 ) {
-    val showDiscardChangesConfirmationDialog = memeTextStates.isNotEmpty()
+    val hasAlreadyEdition = memeTextStates.isNotEmpty()
             && (editionButtonsState.editMode as? EditionButtonsState.EditMode.OnHold)?.canRedo == true
 
     val isNewText: Boolean get() = editionSource is EditionSource.NewText

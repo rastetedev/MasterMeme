@@ -109,19 +109,25 @@ private fun CreateMemeScreenContent(
     val imageAspectRatio = remember(imageBitmap) {
         imageBitmap.width.toFloat() / imageBitmap.height.toFloat()
     }
-    var onNavigateBackFlag by remember { mutableStateOf(false) }
+    var showDiscardMemeEditionDialog by remember { mutableStateOf(false) }
+
+    fun validateBackNavigation() {
+        if (uiState.hasAlreadyEdition) {
+            showDiscardMemeEditionDialog = true
+        } else {
+            navigateBack()
+        }
+    }
 
     BackHandler {
-        onNavigateBackFlag = true
+        validateBackNavigation()
     }
 
     Scaffold(
         topBar = {
             NavigationalTopBar(
                 title = stringResource(R.string.create_meme_title),
-                onNavigateBack = {
-                    onNavigateBackFlag = true
-                }
+                onNavigateBack = { validateBackNavigation() }
             )
         }
     ) { paddingValues ->
@@ -241,13 +247,11 @@ private fun CreateMemeScreenContent(
             }
         }
 
-        if (onNavigateBackFlag &&
-            uiState.showDiscardChangesConfirmationDialog
-        ) {
+        if (showDiscardMemeEditionDialog) {
             DiscardMemeCreationDialog(
-                onDismiss = { onNavigateBackFlag = false },
+                onDismiss = { showDiscardMemeEditionDialog = false },
                 onConfirm = {
-                    onNavigateBackFlag = false
+                    showDiscardMemeEditionDialog = false
                     navigateBack()
                 }
             )
