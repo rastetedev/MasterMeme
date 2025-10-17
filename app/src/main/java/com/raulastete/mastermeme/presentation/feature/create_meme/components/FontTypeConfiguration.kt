@@ -20,12 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raulastete.mastermeme.presentation.model.MemeFontTypeUi
-import com.raulastete.mastermeme.presentation.model.toTextStyle
 
 @Composable
 fun FontTypeConfiguration(
     modifier: Modifier = Modifier,
-    selectedFontType: MemeFontTypeUi,
+    selectedFontType: MemeFontTypeUi?,
     fontTypeList: List<MemeFontTypeUi>,
     onTypeSelected: (MemeFontTypeUi) -> Unit
 ) {
@@ -60,15 +59,13 @@ fun FontTypeConfiguration(
                         .clickable { onTypeSelected(memeFontType) }
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    // Preview text with font style
                     Text(
                         text = "Good",
-                        style = memeFontType.toTextStyle(
+                        style = memeFontType.textStyle.copy(
                             color = textColor,
-                            fontSize = 28f
+                            fontSize = 28.sp
                         ),
                     )
-                    // Font name
                     Text(
                         text = memeFontType.displayName,
                         style = MaterialTheme.typography.bodySmall.copy(

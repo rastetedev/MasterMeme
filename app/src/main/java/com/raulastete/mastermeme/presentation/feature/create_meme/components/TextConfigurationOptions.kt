@@ -22,13 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.raulastete.mastermeme.R
-import com.raulastete.mastermeme.presentation.feature.create_meme.TextOption
+import com.raulastete.mastermeme.presentation.model.TextConfigurationOption
 import com.raulastete.mastermeme.presentation.ui.theme.White
 
 @Composable
-fun TextOptions(
+fun TextConfigurationOptions(
     modifier: Modifier = Modifier,
-    optionSelected: TextOption?,
+    optionSelected: TextConfigurationOption?,
     onDiscardChanges: () -> Unit,
     onConfirmChanges: () -> Unit,
     onSelectFontTypeOption: () -> Unit,
@@ -57,9 +57,9 @@ fun TextOptions(
 
         Row(horizontalArrangement = Arrangement.Center) {
 
-            TextOptionButton(
+            TextConfigurationOptionButton(
                 onClick = onSelectFontTypeOption,
-                selected = optionSelected == TextOption.FontType
+                selected = optionSelected == TextConfigurationOption.FontType
             ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.text_style),
@@ -71,9 +71,9 @@ fun TextOptions(
 
             Spacer(Modifier.width(16.dp))
 
-            TextOptionButton(
+            TextConfigurationOptionButton(
                 onClick = onSelectEditFontSizeOption,
-                selected = optionSelected == TextOption.FontSize
+                selected = optionSelected == TextConfigurationOption.FontSize
             ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.text_size),
@@ -85,9 +85,9 @@ fun TextOptions(
 
             Spacer(Modifier.width(16.dp))
 
-            TextOptionButton(
+            TextConfigurationOptionButton(
                 onClick = onSelectEditFontColorOption,
-                selected = optionSelected == TextOption.FontColor
+                selected = optionSelected == TextConfigurationOption.FontColor
             ) {
                 Icon(
                     painter = painterResource(R.drawable.text_color),
@@ -113,7 +113,7 @@ fun TextOptions(
 }
 
 @Composable
-private fun TextOptionButton(
+private fun TextConfigurationOptionButton(
     onClick: () -> Unit,
     selected: Boolean,
     icon: @Composable () -> Unit

@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun FontSizeConfiguration(
     modifier: Modifier = Modifier,
-    fontSizeFloat: Float = 0.5f,
+    fontSizeFloat: Float? = 0.5f,
     onFontSizeFloatChange: (Float) -> Unit
 
 ) {
@@ -64,7 +64,7 @@ fun FontSizeConfiguration(
 
         Slider(
             modifier = Modifier.weight(1f),
-            value = fontSizeFloat,
+            value = fontSizeFloat ?: 0.5f,
             onValueChange = onFontSizeFloatChange,
             interactionSource = interactionSource,
             colors = SliderDefaults.colors(

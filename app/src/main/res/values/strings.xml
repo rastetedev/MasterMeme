@@ -11,4 +11,9 @@
     <string name="no_memes_found">No memes found :C</string>
 
     <string name="create_meme_title">New meme</string>
+
+    <string name="dialog_discard_meme_creation_title">Leave editor?</string>
+    <string name="dialog_discard_meme_creation_message">You will lose your precious meme. If you\'re fine with that, press ‘Leave’.</string>
+    <string name="dialog_discard_meme_creation_confirm_button">Leave</string>
+    <string name="dialog_discard_meme_creation_cancel_button">Cancel</string>
 </resources>

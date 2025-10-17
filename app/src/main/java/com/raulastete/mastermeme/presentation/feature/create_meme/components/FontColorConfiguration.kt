@@ -27,7 +27,7 @@ import com.raulastete.mastermeme.presentation.model.MemeFontColorUi
 @Composable
 fun FontColorConfiguration(
     modifier: Modifier = Modifier,
-    selectedColor: MemeFontColorUi,
+    selectedColor: MemeFontColorUi?,
     fontColorList: List<MemeFontColorUi>,
     onColorSelected: (MemeFontColorUi) -> Unit
 ) {
